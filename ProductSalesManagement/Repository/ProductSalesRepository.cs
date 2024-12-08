@@ -24,7 +24,7 @@ namespace ProductSalesManagement.Repository
                     return await _context.Orders.Include(order => order.Customer).Include(order => order.OrderItems)
                         .Include(order => order.Staff).Include(order => order.Store).ToListAsync();
                 }
-                //Returns an empty list if context is null
+                
                 return new List<Order>();
             }
             catch (Exception ex)
@@ -61,7 +61,7 @@ namespace ProductSalesManagement.Repository
                                       StoreName = s.StoreName
                                   }).ToListAsync();
                 }
-                //Returns an empty list if context is null
+               
                 return new List<ProductionSalesViewModel>();
             }
             catch (Exception ex)
@@ -162,27 +162,23 @@ namespace ProductSalesManagement.Repository
                 {
                     throw new InvalidOperationException("Database context is not initialized");
                 }
-                //Find the employee by id
+                
                 var existingOrder = await _context.Orders.FindAsync(id);
                 if (existingOrder == null)
                 {
                     return null;
                 }
 
-                //Map values wit fields
                 existingOrder.OrderDate = orderTable.OrderDate;
                 existingOrder.RequiredDate = orderTable.RequiredDate;
                 existingOrder.ShippedDate = orderTable.ShippedDate;
 
-                //save changes to the database
                 await _context.SaveChangesAsync();
 
-                //Retreive the employee with the related Department
                 var OrderCustomerOI = await _context.Orders.Include(order => order.Customer).Include(order => order.OrderItems)
                     .Include(order => order.Staff).Include(order => order.Store)
                     .FirstOrDefaultAsync(existingOrder => existingOrder.OrderId == orderTable.OrderId);
 
-                //Return the added employee record
                 return OrderCustomerOI;
             }
             catch (Exception ex)
@@ -208,8 +204,6 @@ namespace ProductSalesManagement.Repository
                         StatusCode = StatusCodes.Status400BadRequest
                     };
                 }
-
-                //Ensure the context is not null
                 if (_context == null)
                 {
                     return new JsonResult(new
@@ -222,7 +216,6 @@ namespace ProductSalesManagement.Repository
                     };
                 }
 
-                //Find the employee by id
                 var existingOrder = _context.Orders.Find(id);
 
                 if (existingOrder == null)
@@ -236,10 +229,9 @@ namespace ProductSalesManagement.Repository
                         StatusCode = StatusCodes.Status400BadRequest
                     };
                 }
-                //Remove the employee record from the DBContext
+                
                 _context.Orders.Remove(existingOrder);
 
-                //save changes to the database
                 _context.SaveChangesAsync();
                 return new JsonResult(new
                 {
@@ -273,7 +265,7 @@ namespace ProductSalesManagement.Repository
                 {
                     return await _context.OrderItems.Include(order => order.Product).Include(order => order.Order).ToListAsync();
                 }
-                //Returns an empty list if context is null
+                
                 return new List<OrderItem>();
             }
             catch (Exception ex)
@@ -292,7 +284,7 @@ namespace ProductSalesManagement.Repository
                 {
                     return await _context.Customers.Include(order => order.Orders).ToListAsync();
                 }
-                //Returns an empty list if context is null
+
                 return new List<Customer>();
             }
             catch (Exception ex)
@@ -312,7 +304,7 @@ namespace ProductSalesManagement.Repository
                     return await _context.Brands.Include(order => order.Products).ToListAsync();
 
                 }
-                //Returns an empty list if context is null
+                
                 return new List<Brand>();
             }
             catch (Exception ex)
@@ -331,7 +323,7 @@ namespace ProductSalesManagement.Repository
                 {
                     return await _context.Categories.Include(order => order.Products).ToListAsync();
                 }
-                //Returns an empty list if context is null
+               
                 return new List<Category>();
             }
             catch (Exception ex)
@@ -350,7 +342,7 @@ namespace ProductSalesManagement.Repository
                 {
                     return await _context.Managers.Include(order => order.Stores).ToListAsync();
                 }
-                //Returns an empty list if context is null
+                
                 return new List<Manager>();
             }
             catch (Exception ex)
@@ -370,7 +362,7 @@ namespace ProductSalesManagement.Repository
                     return await _context.Products.Include(order => order.Brand).Include(order => order.Category).
                         Include(order => order.OrderItems).Include(order => order.Stocks).ToListAsync();
                 }
-                //Returns an empty list if context is null
+              
                 return new List<Product>();
             }
             catch (Exception ex)
