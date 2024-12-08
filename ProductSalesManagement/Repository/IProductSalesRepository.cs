@@ -7,7 +7,7 @@ namespace ProductSalesManagement.Repository
     public interface IProductSalesRepository
     {
         #region   1  - Get all orders from DB - Search All
-        //Get all employees from DB - Search All
+       
         public Task<ActionResult<IEnumerable<Order>>> GetAllOrders();
         #endregion
 
@@ -32,7 +32,7 @@ namespace ProductSalesManagement.Repository
         #endregion
 
         #region 7  - Delete an order
-        public JsonResult DeleteTblOrder(int id); //return type > JsonResult -> true/false
+        public JsonResult DeleteTblOrder(int id); 
         #endregion
 
         #region 8  - Get all orderItems
