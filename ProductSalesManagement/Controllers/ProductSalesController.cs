@@ -65,7 +65,6 @@ namespace ProductSalesManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                //insert a new record and return as an object named employee
                 var neworder = await _repository.PostTblOrderReturnRecord(orderTable);
                 if (neworder != null)
                 {
@@ -87,7 +86,6 @@ namespace ProductSalesManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                //insert a new record and return as an object named employee
                 var newOrderId = await _repository.PostTblOrderReturnId(orderTable);
                 if (newOrderId != null)
                 {
